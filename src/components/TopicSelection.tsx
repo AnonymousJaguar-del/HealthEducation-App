@@ -186,12 +186,12 @@ export function TopicSelection({
                     <h4 className={`font-black text-sm ${prog.preTestCompleted ? 'text-green-900' : 'text-slate-800'}`}>1. Pre-Test Assessment</h4>
                     {prog.preTestCompleted && (
                       <span className="text-[9px] font-black bg-green-200 text-green-700 px-2 py-0.5 rounded uppercase">
-                        Score: {prog.preTestScore || 0}/10
+                        Score: {prog.preTestScore || 0}/{activeTopic.preTestQuestions?.length || 5}
                       </span>
                     )}
                   </div>
                   <p className={`text-xs mt-1 leading-snug ${prog.preTestCompleted ? 'text-green-700' : 'text-slate-500'}`}>
-                    10 MCQs to understand your active triage instincts before studying guidelines.
+                    {activeTopic.preTestQuestions?.length || 5} MCQs to understand your active triage instincts before studying guidelines.
                   </p>
                   
                   {/* Action trigger button */}
@@ -299,7 +299,7 @@ export function TopicSelection({
                     }`}>3. Post-Test Evaluation</h4>
                     {prog.postTestCompleted && (
                       <span className="text-[9px] font-black bg-green-200 text-green-700 px-2 py-0.5 rounded uppercase">
-                        Mastery: {prog.postTestScore || 0}/10
+                        Mastery: {prog.postTestScore || 0}/{activeTopic.postTestQuestions?.length || 5}
                       </span>
                     )}
                   </div>
@@ -410,7 +410,7 @@ export function TopicSelection({
                       <h4 className="font-extrabold text-xs text-slate-850">1. Pre-Test Assessment</h4>
                       {prog.preTestCompleted && (
                         <span className="text-[8.5px] font-black bg-green-100 text-green-700 px-1.5 py-0.5 rounded">
-                          {prog.preTestScore || 0}/10
+                          {prog.preTestScore || 0}/{activeTopic.preTestQuestions?.length || 5}
                         </span>
                       )}
                     </div>
@@ -495,12 +495,12 @@ export function TopicSelection({
                       <h4 className="font-extrabold text-xs">3. Post-Test Evaluation</h4>
                       {prog.postTestCompleted && (
                         <span className="text-[8.5px] font-black bg-green-100 text-green-700 px-1.5 py-0.5 rounded">
-                          {prog.postTestScore || 0}/10
+                          {prog.postTestScore || 0}/{activeTopic.postTestQuestions?.length || 5}
                         </span>
                       )}
                     </div>
                     <p className="text-[11px] text-slate-450 mt-0.5 leading-snug">
-                      Score 8/10 accuracy to successfully master this topic track.
+                      Score 80%+ accuracy to successfully master this topic track.
                     </p>
                     {prog.moduleCompleted && !prog.postTestCompleted && (
                       <button

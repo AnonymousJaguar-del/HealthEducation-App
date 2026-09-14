@@ -77,7 +77,7 @@ export function PrePostTest({ type, questions, onBack, onComplete, topicTitle }:
               {type === 'pre' ? 'Pre-Test' : 'Post-Test'}: {topicTitle}
             </h3>
             <p className="text-xs text-slate-500 mt-2 leading-relaxed">
-              Answer <span className="font-bold text-teal-700">10 multiple choice questions</span> to assess your emergency first aid response speed and accuracy.
+              Answer <span className="font-bold text-teal-700">{questions.length} multiple choice questions</span> to assess your emergency first aid response speed and accuracy.
             </p>
           </div>
 
@@ -117,7 +117,8 @@ export function PrePostTest({ type, questions, onBack, onComplete, topicTitle }:
 
   // Quiz End / Scorecard displays
   if (quizFinished) {
-    const passed = score >= 8;
+    const passingScore = Math.ceil(questions.length * 0.8);
+    const passed = score >= passingScore;
     
     return (
       <div className="flex-1 p-6 flex flex-col justify-between bg-slate-50" id="test-results">
@@ -139,14 +140,14 @@ export function PrePostTest({ type, questions, onBack, onComplete, topicTitle }:
                 strokeWidth="8"
                 fill="none"
                 strokeDasharray={`${2 * Math.PI * 44}`}
-                strokeDashoffset={`${2 * Math.PI * 44 * (1 - score / 10)}`}
+                strokeDashoffset={`${2 * Math.PI * 44 * (1 - score / (questions.length || 1))}`}
                 strokeLinecap="round"
                 className="transition-all duration-1000 transform -rotate-90 origin-center"
               />
             </svg>
             <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
               <span className="text-3xl font-black text-slate-800">{score}</span>
-              <span className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Score / 10</span>
+              <span className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Score / {questions.length}</span>
             </div>
           </div>
 
@@ -154,13 +155,13 @@ export function PrePostTest({ type, questions, onBack, onComplete, topicTitle }:
             <span className={`text-[10px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider ${
               passed ? 'bg-emerald-100 text-emerald-800' : 'bg-teal-100 text-teal-800'
             }`}>
-              {score === 10 ? '🥇 Master Clinician' : score >= 8 ? '🥈 Lifesaver Master' : '🥉 Apprentice Trainee'}
+              {score === questions.length ? '🥇 Master Clinician' : score >= passingScore ? '🥈 Lifesaver Master' : '🥉 Apprentice Trainee'}
             </span>
             
             <h3 className="font-extrabold text-lg text-slate-800 mt-3 leading-tight">
-              {score === 10
+              {score === questions.length
                 ? 'Absolute Perfect Triage!'
-                : score >= 8
+                : score >= passingScore
                 ? 'Great Job Officer!'
                 : 'Nice Try Academy Cadet!'}
             </h3>
@@ -221,7 +222,7 @@ export function PrePostTest({ type, questions, onBack, onComplete, topicTitle }:
           {type === 'pre' ? 'Pre-Test' : 'Post-Test'}
         </span>
         <span className="text-xs font-bold text-slate-400">
-          Q {currentIndex + 1} / 10
+          Q {currentIndex + 1} / {questions.length}
         </span>
       </div>
 

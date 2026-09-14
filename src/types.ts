@@ -28,7 +28,9 @@ export interface TopicContent {
   textColor: string; // Tailwind text color class
   identification: ModuleSection;
   firstAid: ModuleSection;
-  questions: Question[];
+  preTestQuestions: Question[];
+  postTestQuestions: Question[];
+  questions?: Question[];
 }
 
 export interface UserProgress {

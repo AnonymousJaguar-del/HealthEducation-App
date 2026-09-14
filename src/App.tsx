@@ -295,7 +295,7 @@ export default function App() {
                 {mode === 'pre-test' && (
                   <PrePostTest
                     type="pre"
-                    questions={selectedTopic.questions}
+                    questions={selectedTopic.preTestQuestions || selectedTopic.questions?.slice(0, 5) || []}
                     onBack={() => setMode('selection')}
                     onComplete={handleCompletePreTest}
                     topicTitle={selectedTopic.title}
@@ -311,7 +311,7 @@ export default function App() {
                 {mode === 'post-test' && (
                   <PrePostTest
                     type="post"
-                    questions={selectedTopic.questions}
+                    questions={selectedTopic.postTestQuestions || selectedTopic.questions?.slice(5, 10) || []}
                     onBack={() => setMode('selection')}
                     onComplete={handleCompletePostTest}
                     topicTitle={selectedTopic.title}

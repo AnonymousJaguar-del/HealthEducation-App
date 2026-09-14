@@ -74,9 +74,9 @@ export const ALL_BADGES: AcademyBadge[] = [
   {
     id: 'master-clinician',
     title: 'Master Clinician',
-    description: 'Scored a perfect 10/10 on any Post-Test Assessment',
+    description: 'Scored 100% on any Post-Test Assessment',
     icon: '🥇',
-    check: (p) => Object.values(p.progress).some((item) => (item.postTestScore ?? 0) === 10),
+    check: (p) => Object.values(p.progress).some((item) => (item.postTestScore ?? 0) >= 5),
   },
   {
     id: 'active-streak',
@@ -122,10 +122,15 @@ export function ProfileView({
   const modulesCount = progressEntries.filter(p => p.moduleCompleted).length;
   const postTestsCount = progressEntries.filter(p => p.postTestCompleted).length;
 
-  // Average post test score
-  const postTestScores = progressEntries.filter(p => p.postTestScore !== undefined).map(p => p.postTestScore || 0);
-  const averageScore = postTestScores.length > 0 
-    ? Math.round(postTestScores.reduce((a, b) => a + b, 0) / postTestScores.length * 10) 
+  // Average post test score (normalized to percentage)
+  const postTestPercentages = progressEntries
+    .filter(p => p.postTestScore !== undefined)
+    .map(p => {
+      const s = p.postTestScore || 0;
+      return s <= 5 ? Math.round((s / 5) * 100) : Math.round((s / 10) * 100);
+    });
+  const averageScore = postTestPercentages.length > 0 
+    ? Math.round(postTestPercentages.reduce((a, b) => a + b, 0) / postTestPercentages.length) 
     : 0; // percentage
 
   const handleSaveName = () => {
