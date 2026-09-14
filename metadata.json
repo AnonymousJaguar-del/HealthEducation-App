@@ -1,0 +1,6 @@
+{
+  "name": "Vitals",
+  "description": "HeartRescue India School Program: cardiovascular emergency education, bystander CPR, stroke recognition, and health awareness.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
