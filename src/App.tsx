@@ -8,7 +8,8 @@ import { ModuleSlides } from './components/ModuleSlides';
 import { PrePostTest } from './components/PrePostTest';
 import { Shield, BookOpen, Clock, HeartPulse, Sparkles, User, Flame } from 'lucide-react';
 
-const LOCAL_STORAGE_KEY = 'lifesaver_academy_profile_v2';
+// v3: tests now use the PDF question sets, so scores saved under v2 no longer apply
+const LOCAL_STORAGE_KEY = 'lifesaver_academy_profile_v3';
 
 const DEFAULT_PROFILE: UserProfile = {
   name: 'First Aid Rookie',
@@ -135,6 +136,8 @@ export default function App() {
       [selectedTopic.id]: {
         ...existingProg,
         moduleCompleted: true,
+        // A topic with no pre/post test (Module 10) is complete once its lesson is read
+        ...(selectedTopic.questions.length === 0 && { postTestCompleted: true }),
       },
     };
 
@@ -295,7 +298,7 @@ export default function App() {
                 {mode === 'pre-test' && (
                   <PrePostTest
                     type="pre"
-                    questions={selectedTopic.preTestQuestions || selectedTopic.questions?.slice(0, 5) || []}
+                    questions={selectedTopic.questions}
                     onBack={() => setMode('selection')}
                     onComplete={handleCompletePreTest}
                     topicTitle={selectedTopic.title}
@@ -311,7 +314,7 @@ export default function App() {
                 {mode === 'post-test' && (
                   <PrePostTest
                     type="post"
-                    questions={selectedTopic.postTestQuestions || selectedTopic.questions?.slice(5, 10) || []}
+                    questions={selectedTopic.questions}
                     onBack={() => setMode('selection')}
                     onComplete={handleCompletePostTest}
                     topicTitle={selectedTopic.title}

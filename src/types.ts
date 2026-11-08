@@ -28,9 +28,7 @@ export interface TopicContent {
   textColor: string; // Tailwind text color class
   identification: ModuleSection;
   firstAid: ModuleSection;
-  preTestQuestions: Question[];
-  postTestQuestions: Question[];
-  questions?: Question[];
+  questions: Question[]; // Used for both the pre-test and the post-test; empty when the module has no test
 }
 
 export interface UserProgress {

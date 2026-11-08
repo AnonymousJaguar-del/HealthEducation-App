@@ -1,4 +1,259 @@
-import { TopicContent } from '../types';
+import { Question, TopicContent } from '../types';
+
+// Pre & Post Test question sets, taken verbatim (questions and option order) from the
+// HRI Schools Module PDF. The same set is used for both the pre-test and the post-test.
+
+// Module 1 Pre & Post Test
+const module1Questions: Question[] = [
+  {
+    id: 'm1-q1',
+    question: 'How many chambers does your heart have?',
+    options: ['Six', 'Five', 'Four', 'Three'],
+    correctAnswerIndex: 2,
+    explanation: 'The heart has four chambers: two atria and two ventricles.'
+  },
+  {
+    id: 'm1-q2',
+    question: 'Your heart is a/an',
+    options: ['Centre for thoughts and feelings', 'Specialized muscular organ', 'Artery', 'Vein'],
+    correctAnswerIndex: 1,
+    explanation: 'The heart is a specialized muscular organ that pumps blood.'
+  },
+  {
+    id: 'm1-q3',
+    question: 'What is the function of your heart?',
+    options: [
+      'Helps you breathe',
+      'Helps in digestion',
+      'Supplies nutrition and oxygen to the entire body through blood',
+      'It excretes waste products out of the body'
+    ],
+    correctAnswerIndex: 2,
+    explanation: 'The heart pumps blood that carries nutrition and oxygen to the entire body.'
+  },
+  {
+    id: 'm1-q4',
+    question: 'How many times does your heart beat in a minute?',
+    options: ['80', '20', '140', '40'],
+    correctAnswerIndex: 0,
+    explanation: 'At rest, the heart beats about 80 times a minute.'
+  },
+  {
+    id: 'm1-q5',
+    question: 'How does your heart receive nutrition and oxygen?',
+    options: [
+      'From the blood in your heart',
+      'From small arteries on the heart',
+      'From your stomach',
+      'From your brain'
+    ],
+    correctAnswerIndex: 1,
+    explanation: 'The heart muscle gets its blood supply from small (coronary) arteries on its surface.'
+  },
+];
+
+// Module 2 Pre & Post Test
+const module2Questions: Question[] = [
+  {
+    id: 'm2-q1',
+    question: 'Risks for a heart attack include:',
+    options: ['High blood pressure', 'Smoking', 'Lack of exercise', 'All of the above'],
+    correctAnswerIndex: 3,
+    explanation: 'High blood pressure, smoking and lack of exercise all increase the risk of a heart attack.'
+  },
+  {
+    id: 'm2-q2',
+    question: 'A person with Heart Attack can have sudden cardiac arrest',
+    options: ['True', 'False'],
+    correctAnswerIndex: 0,
+    explanation: 'A heart attack can lead to sudden cardiac arrest, so never leave the person alone.'
+  },
+  {
+    id: 'm2-q3',
+    question: 'A patient with heart attack can present with:',
+    options: ['Chest pain', 'Shoulder or left arm pain', 'Sweating or fainting', 'All the above'],
+    correctAnswerIndex: 3,
+    explanation: 'Chest pain, shoulder or left arm pain, and sweating or fainting are all warning signs of a heart attack.'
+  },
+  {
+    id: 'm2-q4',
+    question: 'What will you do when you identify a person who could be having a Heart attack?',
+    options: [
+      'Give water to drink',
+      'Give gastritis medication',
+      'Call an ambulance and take to nearest Hospital immediately',
+      'Give rest and watch for recovery'
+    ],
+    correctAnswerIndex: 2,
+    explanation: 'Call 108 for an ambulance and get the person to the nearest hospital immediately.'
+  },
+];
+
+// Module 3-6 Pre-Test (Bystander response and compression-only CPR)
+const cprModuleQuestions: Question[] = [
+  {
+    id: 'm3-q1',
+    question: 'What is your next action as a bystander after checking response in a collapsed victim and found unresponsiveness?',
+    options: ['Take victim to hospital', 'Check response again to confirm', 'Shout for Help', 'Check scene safety'],
+    correctAnswerIndex: 2,
+    explanation: 'Scene safety, check response, then call for help: shout "Help! Help! Here is a collapsed victim".'
+  },
+  {
+    id: 'm3-q2',
+    question: 'As a bystander if you find an unresponsive victim is having abnormal breathing/gasping, what is your next action?',
+    options: [
+      'Since the victim is still having some breathing, wait till help arrives',
+      'Call 108 and ask to send EMS and AED and start Chest Compressions',
+      'Start Chest compressions',
+      'Give mouth-to-mouth breathing'
+    ],
+    correctAnswerIndex: 1,
+    explanation: 'Gasping or snorting is not normal breathing. Call 108, ask for EMS and an AED, and start chest compressions.'
+  },
+  {
+    id: 'm3-q3',
+    question: 'As a bystander you have called for help after finding an unresponsive victim, if another bystander arrives on scene what will you instruct him/her?',
+    options: [
+      'Call 108 and tell them to send EMS with AED for a collapsed unresponsive victim',
+      'Go find an AED and come back to the scene',
+      'Go get additional help',
+      'Assist in CPR'
+    ],
+    correctAnswerIndex: 0,
+    explanation: 'Ask the person who arrives to call 108, tell them about the collapsed victim, and ask them to send EMS and an AED.'
+  },
+  {
+    id: 'm3-q4',
+    question: 'What is the recommended required depth of chest compressions?',
+    options: ['1 inch', '2 inches', '3 inches', 'None of the above'],
+    correctAnswerIndex: 1,
+    explanation: 'Compress the chest at least two inches.'
+  },
+  {
+    id: 'm3-q5',
+    question: 'What is the recommended rate of chest compressions for bystanders?',
+    options: ['At least 100 in one minute', 'At least 150 in one minute', 'At least 50 in one minute', 'None of the above'],
+    correctAnswerIndex: 0,
+    explanation: 'Compress the chest at a rate of at least 100 per minute.'
+  },
+  {
+    id: 'm3-q6',
+    question: 'Which of the following best describes the correct steps of a bystander upon finding a collapsed victim?',
+    options: [
+      'Check scene safety, check response, call for help, check breathing',
+      'Call for help, Check breathing and start chest compressions',
+      'Call for help and start chest compressions',
+      'Give two rescue breaths and start chest compressions'
+    ],
+    correctAnswerIndex: 0,
+    explanation: 'Check scene safety, check response, call for help, then check for normal breathing.'
+  },
+  {
+    id: 'm3-q7',
+    question: 'If AED is unavailable, what is your next step as a bystander?',
+    options: [
+      'Continue chest compressions till help arrives',
+      'Stop chest compressions',
+      'Stop chest compressions and go in search of AED',
+      'None of the above'
+    ],
+    correctAnswerIndex: 0,
+    explanation: 'If no AED is available, continue chest compressions until paramedics arrive.'
+  },
+  {
+    id: 'm3-q8',
+    question: 'As a bystander performing chest compressions, when will you stop compressions?',
+    options: ['After 5 minutes', 'After use of AED', 'Till you get tired', 'Till help arrives'],
+    correctAnswerIndex: 3,
+    explanation: 'Keep going until paramedics arrive. When you get tired, take turns with others.'
+  },
+];
+
+// Pre & Post Test (Module 7,8) - shared by Nutrition & Physical Activity and CVD Risk Factors
+const module7And8Questions: Question[] = [
+  {
+    id: 'm78-q1',
+    question: 'Which of the following sources of fat are good for the heart?',
+    options: ['Butter', 'Cheese', 'Mutton', 'Fish'],
+    correctAnswerIndex: 3,
+    explanation: 'Fish is a heart-healthy source of fat; butter, cheese and mutton are not.'
+  },
+  {
+    id: 'm78-q2',
+    question: 'Which of the following are risk factors for a heart attack ?',
+    options: ['Smoking', 'High blood pressure', 'Uncontrolled diabetes', 'All of the above'],
+    correctAnswerIndex: 3,
+    explanation: 'Smoking, high blood pressure and diabetes are all major risk factors for heart disease.'
+  },
+  {
+    id: 'm78-q3',
+    question: 'Smoking is a direct cause of :',
+    options: ['Heart attack', 'Stroke', 'Lung cancer', 'All of the above'],
+    correctAnswerIndex: 3,
+    explanation: 'Smoking directly causes heart attack, stroke and lung cancer.'
+  },
+  {
+    id: 'm78-q4',
+    question: 'Which of the following is good for the heart?',
+    options: [
+      'Eating food high in cholesterol and sugar',
+      'Being physically active',
+      'Smoking',
+      'Not taking medications for high blood pressure'
+    ],
+    correctAnswerIndex: 1,
+    explanation: 'Regular physical activity keeps the heart healthy.'
+  },
+  {
+    id: 'm78-q5',
+    question: 'Which of the following is good for your heart?',
+    options: ['Fried foods', 'Fresh fruits and vegetables', 'Sweets', 'Baked food'],
+    correctAnswerIndex: 1,
+    explanation: 'Fresh fruits and vegetables are part of a heart-healthy diet.'
+  },
+];
+
+// Module 9 Pre & Post Test (Stroke)
+const module9Questions: Question[] = [
+  {
+    id: 'm9-q1',
+    question: 'What is a stroke?',
+    options: [
+      'Blocked blood vessel in the brain',
+      'Bleeding in the brain from a blood vessel',
+      'Loss of oxygen to a part of the brain',
+      'All of the above'
+    ],
+    correctAnswerIndex: 3,
+    explanation: 'A stroke can be a blocked or bleeding blood vessel in the brain, causing loss of oxygen to part of the brain.'
+  },
+  {
+    id: 'm9-q2',
+    question: 'What is / are the risk factors for stroke?',
+    options: ['Smoking', 'Diabetes', 'High blood pressure', 'All of the above'],
+    correctAnswerIndex: 3,
+    explanation: 'Smoking, diabetes and high blood pressure are all risk factors for stroke.'
+  },
+  {
+    id: 'm9-q3',
+    question: 'A patient with stroke can present with ___________',
+    options: ['Limb Weakness', 'Slurring of speech', 'Facial Asymmetry', 'All of the above'],
+    correctAnswerIndex: 3,
+    explanation: 'Remember F-A-S-T: Face droop, Arm weakness, Speech problem, Time to call 108.'
+  },
+  {
+    id: 'm9-q4',
+    question: 'What will you do when you identify a person who could be having a Stroke?',
+    options: [
+      'Give water to drink',
+      'Do CPR',
+      'Call an ambulance and take to nearest Hospital immediately',
+      'Give rest and watch for recovery'
+    ],
+    correctAnswerIndex: 2,
+    explanation: 'Time to call 108: get the person to the nearest hospital immediately.'
+  },
+];
 
 export const topicsData: TopicContent[] = [
   {
@@ -84,115 +339,7 @@ export const topicsData: TopicContent[] = [
         'A strong, conditioned heart beats more efficiently, maintaining lower resting rates and recovering quickly after exercise.'
       ],
     },
-    preTestQuestions: [
-      {
-        id: 'ha-pre1',
-        question: 'How many chambers does the human heart have?',
-        options: ['Six', 'Four', 'Five', 'Three'],
-        correctAnswerIndex: 1,
-        explanation: 'The human heart has four distinct chambers: the right atrium, right ventricle, left atrium, and left ventricle.'
-      },
-      {
-        id: 'ha-pre2',
-        question: 'Your heart is anatomically classified as a/an:',
-        options: [
-          'Center for emotional thoughts and feelings',
-          'Artery',
-          'Specialized muscular organ',
-          'Vein'
-        ],
-        correctAnswerIndex: 2,
-        explanation: 'The heart is a specialized muscular organ made of involuntary cardiac muscle tissue that pumps blood continuously.'
-      },
-      {
-        id: 'ha-pre3',
-        question: 'What is the primary physiological function of your heart?',
-        options: [
-          'Supplies nutrition and oxygen to the entire body through blood',
-          'Helps you breathe atmospheric air into lungs',
-          'Helps in stomach digestion',
-          'Excretes metabolic waste products out of the body'
-        ],
-        correctAnswerIndex: 0,
-        explanation: 'The heart acts as a biological pump, circulating oxygen-rich and nutrient-filled blood to every organ and tissue in the body.'
-      },
-      {
-        id: 'ha-pre4',
-        question: 'How many times does an average healthy heart beat in one minute at rest?',
-        options: ['20 bpm', '140 bpm', '40 bpm', '72 to 80 bpm'],
-        correctAnswerIndex: 3,
-        explanation: 'A normal resting heart rate for healthy individuals is typically between 60 to 100 beats per minute, commonly averaging around 72 to 80 bpm.'
-      },
-      {
-        id: 'ha-pre5',
-        question: 'How does the heart muscle itself receive oxygen and nutrients?',
-        options: [
-          'From the stomach and digestive intestines',
-          'From small coronary arteries branching on the outside of the heart',
-          'Directly from the blood pooled inside its own chambers',
-          'Directly from cranial blood vessels in the brain'
-        ],
-        correctAnswerIndex: 1,
-        explanation: 'The myocardium (heart muscle) is nourished by coronary arteries that branch off the aorta and travel along the outer surface of the heart.'
-      },
-    ],
-    postTestQuestions: [
-      {
-        id: 'ha-post1',
-        question: 'Where is the human heart located inside the body?',
-        options: [
-          'In the lower abdomen on the right side',
-          'Inside the right lung cavity',
-          'At the base of the spine',
-          'Behind the breastbone (sternum), slightly tilted to the left side of the chest'
-        ],
-        correctAnswerIndex: 3,
-        explanation: 'The heart lies in the thoracic cavity behind the sternum, tilted slightly toward the left side of the chest.'
-      },
-      {
-        id: 'ha-post2',
-        question: 'True or False: The heart is an involuntary muscle that continues to beat without conscious effort.',
-        options: ['True', 'False', 'Only during daytime hours', 'Only while sleeping'],
-        correctAnswerIndex: 0,
-        explanation: 'The heart is composed of involuntary cardiac muscle regulated by its own intrinsic electrical conduction system.'
-      },
-      {
-        id: 'ha-post3',
-        question: 'What occurs when a coronary artery becomes blocked and blood supply to the heart muscle is cut off?',
-        options: [
-          'The heart enters a dormant hibernation state',
-          'The stomach produces excess gastric acid',
-          'The heart muscle suffers oxygen deprivation leading to tissue damage (Heart Attack)',
-          'The lungs immediately and permanently collapse'
-        ],
-        correctAnswerIndex: 2,
-        explanation: 'Blockage of a coronary artery deprives heart muscle cells of vital oxygen, resulting in acute myocardial ischemia and a heart attack.'
-      },
-      {
-        id: 'ha-post4',
-        question: 'Which anatomical location is most commonly used to check your resting pulse by hand?',
-        options: [
-          'The kneecap (patellar pulse)',
-          'The radial artery on the wrist below the thumb base',
-          'The elbow joint (cubital fossa)',
-          'The center of the collarbone'
-        ],
-        correctAnswerIndex: 1,
-        explanation: 'The radial artery at the wrist (at the base of the thumb) is the most standard, accessible location for checking resting pulse.'
-      },
-      {
-        id: 'ha-post5',
-        question: 'What is the vital role of the heart valves?',
-        options: [
-          'To prevent blood from flowing backward between chambers and vessels',
-          'To cool the temperature of circulating blood',
-          'To filter impurities and bacteria out of the blood',
-          'To produce new red blood cells'
-        ],
-        correctAnswerIndex: 0,
-        explanation: 'The heart valves act as one-way gates that ensure blood flows forward through the chambers in an orderly, unidirectional cycle.'
-      },
-    ],
+    questions: module1Questions,
   },
   {
     id: 'chest-pain',
@@ -283,130 +430,7 @@ export const topicsData: TopicContent[] = [
         'DO NOT allow the person to walk, drive themselves, or exert their body.'
       ],
     },
-    preTestQuestions: [
-      {
-        id: 'cp-pre1',
-        question: 'Which of the following are recognized risk factors for a heart attack?',
-        options: [
-          'High blood pressure (hypertension)',
-          'Lack of regular physical exercise',
-          'Tobacco smoking and diabetes mellitus',
-          'All of the above'
-        ],
-        correctAnswerIndex: 3,
-        explanation: 'High blood pressure, tobacco smoking, physical inactivity, diabetes, and elevated cholesterol are all major heart attack risk factors.'
-      },
-      {
-        id: 'cp-pre2',
-        question: 'Can a person experiencing an acute heart attack suddenly develop sudden cardiac arrest?',
-        options: [
-          'Only in pediatric cases under 5 years old',
-          'True — electrical disruption can cause the heart to abruptly stop pumping',
-          'False — heart attacks and cardiac arrest never occur together',
-          'Only after two to three weeks of recovery'
-        ],
-        correctAnswerIndex: 1,
-        explanation: 'Heart attacks disrupt cardiac blood flow and can trigger malignant electrical rhythms (like ventricular fibrillation), causing sudden cardiac arrest.'
-      },
-      {
-        id: 'cp-pre3',
-        question: 'A patient experiencing a heart attack can present with which of the following signs?',
-        options: [
-          'Central crushing chest pain, cold sweating, or left arm radiation',
-          'Severe pain confined only to the fingernails',
-          'High fever and sneezing',
-          'Sudden earache'
-        ],
-        correctAnswerIndex: 0,
-        explanation: 'Heart attacks commonly present with central chest heaviness radiating to the left arm or jaw, accompanied by diaphoresis and dizziness.'
-      },
-      {
-        id: 'cp-pre4',
-        question: 'What is the immediate priority action when you identify someone who may be having a heart attack?',
-        options: [
-          'Give them hot tea and wait an hour',
-          'Instruct them to take a brisk walk to clear their lungs',
-          'Call an ambulance (108) and arrange immediate hospital transport',
-          'Give home remedies or antacids and observe'
-        ],
-        correctAnswerIndex: 2,
-        explanation: 'Time is Muscle! Immediately call 108 for emergency ambulance transport to an equipped hospital capable of coronary intervention.'
-      },
-      {
-        id: 'cp-pre5',
-        question: 'What is the fundamental difference between angina and a heart attack?',
-        options: [
-          'Angina affects the legs while a heart attack affects the stomach',
-          'Angina is temporary reduced blood flow relieved by rest; a heart attack is prolonged blockage causing heart muscle injury',
-          'Angina is caused by cold weather while a heart attack is an infection',
-          'There is no difference between them'
-        ],
-        correctAnswerIndex: 1,
-        explanation: 'Angina is transient myocardial ischemia that eases with rest; a heart attack (myocardial infarction) causes irreversible muscle necrosis.'
-      },
-    ],
-    postTestQuestions: [
-      {
-        id: 'cp-post1',
-        question: 'Which of the following is a classic warning symptom of a heart attack that does NOT involve the center of the chest?',
-        options: [
-          'Pain or heaviness radiating down the left arm, shoulder, or jaw',
-          'Pain localized strictly to the heels',
-          'A runny nose and watery eyes',
-          'Sudden itching on both elbows'
-        ],
-        correctAnswerIndex: 0,
-        explanation: 'Radiation of discomfort to the left arm, shoulder, jaw, neck, or back is a hallmark non-chest warning sign of cardiac ischemia.'
-      },
-      {
-        id: 'cp-post2',
-        question: 'Why is it dangerous to assume severe chest discomfort is simple "gastritis" and delay seeking care?',
-        options: [
-          'Gastritis medicines cure heart disease',
-          'Ambulances only handle digestive issues',
-          'Delayed medical care leads to irreversible heart muscle death and higher mortality',
-          'Gastritis always turns into influenza'
-        ],
-        correctAnswerIndex: 2,
-        explanation: 'Mistaking heart attack symptoms for acidity/gas is one of the leading causes of pre-hospital delay and preventable deaths.'
-      },
-      {
-        id: 'cp-post3',
-        question: 'What posture should a conscious person suspected of having a heart attack be placed in while awaiting 108?',
-        options: [
-          'Standing up and pacing the hallway',
-          'Lying completely flat face down on their stomach',
-          'Hanging their head upside down',
-          'Seated comfortably with their back supported (half-sitting posture)'
-        ],
-        correctAnswerIndex: 3,
-        explanation: 'A comfortable seated position with the back supported minimizes the workload on the heart and makes breathing easier.'
-      },
-      {
-        id: 'cp-post4',
-        question: 'Which groups of individuals are most likely to experience "atypical" heart attack symptoms without severe chest pain?',
-        options: [
-          'Athletic teenagers only',
-          'Women, elderly individuals, and people with diabetes',
-          'Only deep-sea divers',
-          'No one; all heart attacks feel exactly identical'
-        ],
-        correctAnswerIndex: 1,
-        explanation: 'Women, diabetics, and the elderly often present atypically with shortness of breath, profound fatigue, nausea, or dizziness without crushing chest pain.'
-      },
-      {
-        id: 'cp-post5',
-        question: 'In India, what is the dedicated toll-free emergency phone number to call for ambulance medical dispatch?',
-        options: [
-          '108',
-          '100',
-          '101',
-          '1091'
-        ],
-        correctAnswerIndex: 0,
-        explanation: '108 is the dedicated emergency toll-free telephone number for medical emergencies and ambulance dispatch in India.'
-      },
-    ],
+    questions: module2Questions,
   },
   {
     id: 'cpr-aed',
@@ -497,130 +521,7 @@ export const topicsData: TopicContent[] = [
         'Continue compressions until emergency paramedics arrive, the AED advises to stand clear, or the victim wakes up.'
       ],
     },
-    preTestQuestions: [
-      {
-        id: 'cpr-pre1',
-        question: 'What is your immediate next action as a bystander after checking a collapsed victim and finding them unresponsive?',
-        options: [
-          'Take the victim home in your personal vehicle',
-          'Wait 10 minutes to see if they wake up',
-          'Shout loudly for help and call 108',
-          'Leave the scene immediately'
-        ],
-        correctAnswerIndex: 2,
-        explanation: 'Once you confirm unresponsiveness, immediately shout for help and ensure emergency medical services (108) are called.'
-      },
-      {
-        id: 'cpr-pre2',
-        question: 'If you find an unresponsive victim has abnormal breathing or agonal gasping, what is your next action?',
-        options: [
-          'Give water to clear their throat',
-          'Wait until help arrives since the victim is still taking occasional gasps',
-          'Give rescue breaths only',
-          'Call 108, ask for an AED, and start chest compressions immediately'
-        ],
-        correctAnswerIndex: 3,
-        explanation: 'Agonal gasping is a dying reflex and indicates cardiac arrest. Immediately call 108, request an AED, and start chest compressions.'
-      },
-      {
-        id: 'cpr-pre3',
-        question: 'If you are caring for an unresponsive victim and another bystander arrives, what should you instruct them to do?',
-        options: [
-          'Go locate an Automated External Defibrillator (AED) and bring it back immediately',
-          'Film a video of the scene',
-          'Give the patient a glass of cold water',
-          'Call the patient’s school or employer'
-        ],
-        correctAnswerIndex: 0,
-        explanation: 'Directing a second bystander to fetch an AED while you maintain continuous chest compressions significantly increases survival chances.'
-      },
-      {
-        id: 'cpr-pre4',
-        question: 'What is the recommended required compression depth for an adult during bystander chest compressions?',
-        options: [
-          '0.5 inches (1 cm)',
-          'At least 2 inches (5 cm)',
-          '1 inch (2.5 cm)',
-          '3.5 inches (9 cm)'
-        ],
-        correctAnswerIndex: 1,
-        explanation: 'Compressing at least 2 inches (5 cm) deep is required to squeeze the heart against the spine and generate systemic blood flow.'
-      },
-      {
-        id: 'cpr-pre5',
-        question: 'What is the recommended rate of chest compressions for bystanders?',
-        options: [
-          'At least 40 in one minute',
-          'At least 160 in one minute',
-          'At least 100 compressions in one minute (100–120/min)',
-          '50 compressions in two minutes'
-        ],
-        correctAnswerIndex: 2,
-        explanation: 'Compressions should be delivered at a rate of 100 to 120 beats per minute (to the beat of the song "Stayin\' Alive").'
-      },
-    ],
-    postTestQuestions: [
-      {
-        id: 'cpr-post1',
-        question: 'Which sequence best describes the correct steps upon finding a collapsed victim?',
-        options: [
-          'Start chest compressions before checking scene safety',
-          'Check scene safety, check responsiveness, call for help (108), check breathing',
-          'Call 108 and walk away',
-          'Give two breaths and then check wrist pulse'
-        ],
-        correctAnswerIndex: 1,
-        explanation: 'Always ensure scene safety first, check for responsiveness, call for emergency help (108), and check for absence of normal breathing.'
-      },
-      {
-        id: 'cpr-post2',
-        question: 'If an AED is NOT available at the scene, what is your next step as a bystander?',
-        options: [
-          'Stop chest compressions after 2 minutes',
-          'Leave the victim alone to search the city for an AED',
-          'Give up and wait',
-          'Continue hands-only chest compressions without stopping until emergency help arrives'
-        ],
-        correctAnswerIndex: 3,
-        explanation: 'If no AED is available, continuous hands-only chest compressions keep oxygenated blood circulating to the brain until EMS takes over.'
-      },
-      {
-        id: 'cpr-post3',
-        question: 'As a bystander performing chest compressions, when will you stop compressions?',
-        options: [
-          'When emergency medical personnel arrive and take over, the AED prompts you, or the victim shows signs of life',
-          'After exactly 5 minutes',
-          'As soon as another bystander watches you',
-          'After exactly 30 compressions'
-        ],
-        correctAnswerIndex: 0,
-        explanation: 'CPR should only cease when qualified medical help takes over, an AED is analyzing/shocking, or the victim begins moving and breathing normally.'
-      },
-      {
-        id: 'cpr-post4',
-        question: 'In the 4C approach to an unresponsive victim who is not breathing, what do the 4 Cs stand for?',
-        options: [
-          'Cough, Cool, Care, Continue',
-          'Clean, Check, Carry, Comfort',
-          'Check, Call 108, Compress, Clear for AED',
-          'Calm, Call, Check, Clean'
-        ],
-        correctAnswerIndex: 2,
-        explanation: 'The HeartRescue 4C approach is: 1. Check response & breathing, 2. Call 108 & get AED, 3. Compress chest at 100/min, 4. Clear for AED.'
-      },
-      {
-        id: 'cpr-post5',
-        question: 'Why is allowing full chest recoil between compressions essential?',
-        options: [
-          'It allows blood to refill the heart chambers before the next compression',
-          'It gives the rescuer time to rest their arms',
-          'It prevents the patient from getting too warm',
-          'It prevents the ribs from touching each other'
-        ],
-        correctAnswerIndex: 0,
-        explanation: 'Chest recoil creates negative pressure inside the chest, drawing venous blood back into the heart chambers to prepare for the next pump.'
-      },
-    ],
+    questions: cprModuleQuestions,
   },
   {
     id: 'nutrition-exercise',
@@ -705,120 +606,7 @@ export const topicsData: TopicContent[] = [
         'Share your 60-minute activity log with family members to inspire household-wide healthy habits.'
       ],
     },
-    preTestQuestions: [
-      {
-        id: 'ne-pre1',
-        question: 'Which of the following dietary sources of fat is considered beneficial for heart health?',
-        options: ['Butter', 'Cheese', 'Mutton tallow', 'Fish (containing Omega-3 fats)'],
-        correctAnswerIndex: 3,
-        explanation: 'Fish, especially cold-water varieties, is rich in omega-3 unsaturated fatty acids that reduce arterial inflammation and lower triglycerides.'
-      },
-      {
-        id: 'ne-pre2',
-        question: 'Which of the following dietary choices promotes a healthy heart?',
-        options: [
-          'Deep-fried packaged chips',
-          'Fresh fruits and vegetables',
-          'High-sugar confectioneries and sweetened sodas',
-          'High-sodium processed meats'
-        ],
-        correctAnswerIndex: 1,
-        explanation: 'Fresh fruits and vegetables are packed with dietary fiber, potassium, and antioxidants that lower blood pressure and protect vascular walls.'
-      },
-      {
-        id: 'ne-pre3',
-        question: 'How many minutes of daily physical activity are recommended to maintain cardiovascular fitness?',
-        options: [
-          'At least 30 to 60 minutes every day',
-          'Only 2 minutes once a week',
-          '5 hours continuously without rest',
-          'Exercise is not recommended for heart health'
-        ],
-        correctAnswerIndex: 0,
-        explanation: 'Medical guidelines recommend at least 30 to 60 minutes of moderate physical activity daily to maintain cardiovascular fitness.'
-      },
-      {
-        id: 'ne-pre4',
-        question: 'What happens to your pulse rate immediately after doing 20 squats or jogging?',
-        options: [
-          'It drops to zero',
-          'It remains completely unchanged',
-          'It increases because the heart pumps faster to supply more oxygen to working muscles',
-          'It stops for 5 minutes'
-        ],
-        correctAnswerIndex: 2,
-        explanation: 'Exercise increases metabolic demand in skeletal muscle, prompting the heart to increase its stroke volume and heart rate.'
-      },
-      {
-        id: 'ne-pre5',
-        question: 'Which of the following represents an unhealthy fat that promotes coronary artery blockages?',
-        options: [
-          'Extra virgin olive oil',
-          'Trans fats and excess saturated fats in deep-fried foods and commercial pastries',
-          'Flaxseed oil',
-          'Avocado oil'
-        ],
-        correctAnswerIndex: 1,
-        explanation: 'Trans fats and high levels of saturated fats elevate LDL ("bad") cholesterol, accelerating atherosclerotic plaque formation.'
-      },
-    ],
-    postTestQuestions: [
-      {
-        id: 'ne-post1',
-        question: 'What positive effect does regular aerobic physical exercise have on the heart?',
-        options: [
-          'Causes arterial blood vessels to weaken',
-          'Increases coronary arterial blockages',
-          'Strengthens cardiac muscle, lowers resting blood pressure, and improves cholesterol',
-          'Stops blood flow to the brain'
-        ],
-        correctAnswerIndex: 2,
-        explanation: 'Routine aerobic exercise strengthens cardiac contractility, lowers resting heart rate, reduces blood pressure, and raises HDL cholesterol.'
-      },
-      {
-        id: 'ne-post2',
-        question: 'True or False: You can divide your daily 30-minute physical activity goal into two 15-minute sessions and still gain heart benefits.',
-        options: ['True', 'False', 'Only if done at night', 'Only in freezing temperatures'],
-        correctAnswerIndex: 0,
-        explanation: 'Accumulating 30 minutes of physical activity in two 15-minute intervals delivers equivalent cardiovascular conditioning benefits.'
-      },
-      {
-        id: 'ne-post3',
-        question: 'What is a heart-healthy snack choice compared to fried potato chips?',
-        options: [
-          'Sweet carbonated sodas and pastries',
-          'Deep-fried samosas',
-          'Candy bars',
-          'A bowl of fresh seasonal fruit or a small handful of unsalted roasted nuts'
-        ],
-        correctAnswerIndex: 3,
-        explanation: 'Fresh fruits and unsalted nuts provide healthy fiber, vitamins, and minerals without excess sodium or damaging trans fats.'
-      },
-      {
-        id: 'ne-post4',
-        question: 'Which dietary habit contributes most directly to preventing high blood pressure (hypertension)?',
-        options: [
-          'Adding extra table salt to all cooked dishes',
-          'Reducing daily salt (sodium) intake and staying physically active',
-          'Drinking three caffeinated energy drinks daily',
-          'Avoiding all physical movement'
-        ],
-        correctAnswerIndex: 1,
-        explanation: 'Limiting sodium intake to less than 2,000 mg (about 1 teaspoon of salt) per day helps prevent and manage hypertension.'
-      },
-      {
-        id: 'ne-post5',
-        question: 'Why is plain water preferred over sugary soft drinks for everyday hydration?',
-        options: [
-          'It hydrates effectively without excess sugars and empty calories that cause weight gain and diabetes',
-          'Water causes arterial narrowing',
-          'Sugary drinks are better for heart arteries',
-          'Water contains dangerous caffeine'
-        ],
-        correctAnswerIndex: 0,
-        explanation: 'Sugary beverages contribute directly to obesity, insulin resistance, type 2 diabetes, and accelerated cardiovascular disease.'
-      },
-    ],
+    questions: module7And8Questions,
   },
   {
     id: 'risk-factors',
@@ -927,130 +715,7 @@ export const topicsData: TopicContent[] = [
         'Encourage adult family members to know their numbers: blood pressure, blood glucose, and cholesterol.'
       ],
     },
-    preTestQuestions: [
-      {
-        id: 'rf-pre1',
-        question: 'Which of the following are major risk factors for cardiovascular disease?',
-        options: [
-          'Drinking pure water daily',
-          'Getting 8 hours of sleep',
-          'Tobacco smoking, hypertension, and uncontrolled diabetes',
-          'Eating leafy vegetables'
-        ],
-        correctAnswerIndex: 2,
-        explanation: 'Tobacco smoking, hypertension, diabetes mellitus, high cholesterol, and obesity are the leading modifiable risk factors for CVD.'
-      },
-      {
-        id: 'rf-pre2',
-        question: 'Tobacco smoking is a direct, proven cause of which of the following life-threatening conditions?',
-        options: [
-          'Only minor skin rashes',
-          'Short-term hiccups',
-          'Temporary ear fullness',
-          'Heart attack, stroke, and lung cancer'
-        ],
-        correctAnswerIndex: 3,
-        explanation: 'Tobacco contains toxins that damage blood vessels, accelerate clotting, and cause heart attacks, strokes, and malignancies like lung cancer.'
-      },
-      {
-        id: 'rf-pre3',
-        question: 'Which of the following lifestyle habits is beneficial for heart health?',
-        options: [
-          'Being physically active on a regular basis',
-          'Smoking tobacco occasionally',
-          'Consuming foods high in trans fats',
-          'Ignoring elevated blood pressure readings'
-        ],
-        correctAnswerIndex: 0,
-        explanation: 'Consistent physical activity conditions the cardiovascular system, improves lipid profiles, and lowers resting blood pressure.'
-      },
-      {
-        id: 'rf-pre4',
-        question: 'Why is high blood pressure frequently referred to as a "silent killer"?',
-        options: [
-          'It makes a loud whistling noise in the lungs',
-          'It often causes no noticeable symptoms until triggering a heart attack or stroke',
-          'It only affects individuals while asleep',
-          'It cures itself without any medical treatment'
-        ],
-        correctAnswerIndex: 1,
-        explanation: 'High blood pressure rarely causes symptoms early on, silently damaging arteries and organs for years if not screened.'
-      },
-      {
-        id: 'rf-pre5',
-        question: 'What harmful effect does uncontrolled high blood sugar (diabetes) have on the cardiovascular system?',
-        options: [
-          'It dissolves arterial plaques',
-          'It strengthens coronary artery walls',
-          'It damages arterial linings (endothelium) and accelerates plaque accumulation',
-          'It has zero effect on blood vessels'
-        ],
-        correctAnswerIndex: 2,
-        explanation: 'Chronic hyperglycemia damages blood vessel walls, promotes inflammation, and dramatically accelerates coronary plaque buildup.'
-      },
-    ],
-    postTestQuestions: [
-      {
-        id: 'rf-post1',
-        question: 'Which of the following is one of the American Heart Association’s "Life’s Simple 7" steps?',
-        options: [
-          'Increase intake of sugar-sweetened beverages',
-          'Sleep only 3 hours per night',
-          'Avoid all fresh vegetables',
-          'Stop smoking and avoid all tobacco exposure'
-        ],
-        correctAnswerIndex: 3,
-        explanation: 'AHA Life’s Simple 7 comprises: manage BP, control cholesterol, reduce blood sugar, get active, eat better, maintain healthy weight, and stop smoking.'
-      },
-      {
-        id: 'rf-post2',
-        question: 'How does high blood cholesterol increase the danger of coronary artery disease?',
-        options: [
-          'Excess LDL cholesterol deposits inside arterial walls, forming plaques that narrow blood flow',
-          'It makes the heart pump too slowly',
-          'It thins the blood excessively',
-          'It prevents muscle fatigue'
-        ],
-        correctAnswerIndex: 0,
-        explanation: 'Elevated LDL cholesterol leads to fatty streaks and atherosclerotic plaques in arterial walls, narrowing coronary lumen diameter.'
-      },
-      {
-        id: 'rf-post3',
-        question: 'Which contributing factor can trigger sudden spikes in blood pressure and elevated stress hormones (adrenaline and cortisol)?',
-        options: [
-          'Drinking pure water',
-          'Chronic psychological stress',
-          'Eating fresh vegetables',
-          'Getting 8 hours of restful sleep'
-        ],
-        correctAnswerIndex: 1,
-        explanation: 'Chronic stress activates the sympathetic nervous system, releasing catecholamines that spike heart rate and blood pressure.'
-      },
-      {
-        id: 'rf-post4',
-        question: 'True or False: Lifestyle improvements such as a healthy diet and daily exercise can significantly lower cardiovascular risk even if a family history exists.',
-        options: [
-          'False',
-          'Only for doctors',
-          'True',
-          'Only in hospital settings'
-        ],
-        correctAnswerIndex: 2,
-        explanation: 'While genetics influence baseline risk, adopting healthy lifestyle habits can prevent or substantially delay cardiovascular disease.'
-      },
-      {
-        id: 'rf-post5',
-        question: 'What is the most effective recommendation for an adult family member who has elevated blood pressure?',
-        options: [
-          'Ignore it unless they experience severe chest pain',
-          'Have their blood pressure screened regularly and adopt a low-sodium, active lifestyle',
-          'Take random over-the-counter painkillers',
-          'Stop drinking all fluids'
-        ],
-        correctAnswerIndex: 1,
-        explanation: 'Regular medical monitoring, reducing sodium intake, engaging in aerobic exercise, and taking prescribed medication keep blood pressure controlled.'
-      },
-    ],
+    questions: module7And8Questions,
   },
   {
     id: 'stroke-fast',
@@ -1129,130 +794,7 @@ export const topicsData: TopicContent[] = [
         'Stay with the patient, keep them calm, and monitor breathing until the 108 ambulance arrives.'
       ],
     },
-    preTestQuestions: [
-      {
-        id: 'st-pre1',
-        question: 'What is a stroke?',
-        options: [
-          'A loss of blood flow to the brain due to a clot or hemorrhage cutting off vital oxygen',
-          'A muscular spasm in the shoulder',
-          'An infection in the stomach',
-          'A temporary ear blockage'
-        ],
-        correctAnswerIndex: 0,
-        explanation: 'A stroke is a cerebrovascular event caused either by an arterial clot (ischemic stroke) or a blood vessel rupture (hemorrhagic stroke).'
-      },
-      {
-        id: 'st-pre2',
-        question: 'What are major risk factors for having a stroke?',
-        options: [
-          'Walking 30 minutes daily',
-          'Drinking plenty of water',
-          'Eating fresh fruits',
-          'High blood pressure (hypertension), tobacco smoking, and diabetes'
-        ],
-        correctAnswerIndex: 3,
-        explanation: 'Hypertension is the single most critical modifiable stroke risk factor, alongside diabetes, tobacco smoking, and high cholesterol.'
-      },
-      {
-        id: 'st-pre3',
-        question: 'A patient experiencing an acute stroke can present with which of the following signs?',
-        options: [
-          'Sudden knee bruise only',
-          'Sudden weakness or numbness in a limb, slurred speech, or facial drooping',
-          'High fever and coughing',
-          'Itching on both feet'
-        ],
-        correctAnswerIndex: 1,
-        explanation: 'Sudden weakness on one side of the body, speech difficulty, and facial droop are classic hallmark signs of acute stroke.'
-      },
-      {
-        id: 'st-pre4',
-        question: 'What should you do immediately when you identify someone who may be having a stroke?',
-        options: [
-          'Give them a glass of cold water to drink',
-          'Perform vigorous chest compressions',
-          'Call 108 for an ambulance and arrange emergency hospital transport immediately',
-          'Let them rest and wait until tomorrow'
-        ],
-        correctAnswerIndex: 2,
-        explanation: 'Call 108 immediately. Stroke treatments (like clot-dissolving thrombolysis) must be administered within a strict time window to save brain tissue.'
-      },
-      {
-        id: 'st-pre5',
-        question: 'In the F-A-S-T stroke recognition mnemonic, what does the letter "F" stand for?',
-        options: [
-          'Fast Heartbeat',
-          'Face Drooping — check if one side of the face droops when smiling',
-          'Fever Check',
-          'Foot Swelling'
-        ],
-        correctAnswerIndex: 1,
-        explanation: '"F" stands for Face Drooping. Ask the person to smile; look for an uneven, lopsided mouth or drooping eyelid.'
-      },
-    ],
-    postTestQuestions: [
-      {
-        id: 'st-post1',
-        question: 'In the F-A-S-T mnemonic, what does the letter "A" stand for?',
-        options: [
-          'Appetite Loss',
-          'Ankle Sprain',
-          'Arm Weakness — check if one arm drifts downward when raised',
-          'Alertness Score'
-        ],
-        correctAnswerIndex: 2,
-        explanation: '"A" stands for Arm Weakness. Ask the person to raise both arms out in front; check if one arm drifts down.'
-      },
-      {
-        id: 'st-post2',
-        question: 'In the F-A-S-T mnemonic, what does the letter "S" stand for?',
-        options: [
-          'Speech Problem — check for slurred speech or difficulty repeating words',
-          'Sweating Profusely',
-          'Stomach Cramps',
-          'Shivering'
-        ],
-        correctAnswerIndex: 0,
-        explanation: '"S" stands for Speech Difficulty. Stroke can cause dysarthria (slurred speech) or aphasia (inability to express or understand words).'
-      },
-      {
-        id: 'st-post3',
-        question: 'In the F-A-S-T mnemonic, what does the letter "T" stand for?',
-        options: [
-          'Take body temperature',
-          'Try administering oral aspirin',
-          'Take a nap',
-          'Time to call 108 immediately and record symptom onset time'
-        ],
-        correctAnswerIndex: 3,
-        explanation: '"T" stands for Time to call 108 immediately. Note the exact time symptoms started, as acute interventions are strictly time-dependent.'
-      },
-      {
-        id: 'st-post4',
-        question: 'Why must you NEVER give food, water, or oral medications to a person suspected of having a stroke?',
-        options: [
-          'Water dilutes brain blood',
-          'Stroke frequently impairs swallowing reflexes, risking fatal airway choking or aspiration',
-          'Liquids make the ambulance ride bumpy',
-          'Food stops the heart'
-        ],
-        correctAnswerIndex: 1,
-        explanation: 'Dysphagia (impaired swallowing) is very common in stroke patients; giving food or water risks severe choking and fatal aspiration pneumonia.'
-      },
-      {
-        id: 'st-post5',
-        question: 'In which organ of the human body does a stroke take place?',
-        options: [
-          'The stomach',
-          'The liver',
-          'The brain',
-          'The kidneys'
-        ],
-        correctAnswerIndex: 2,
-        explanation: 'A stroke is a cerebrovascular event occurring in the brain due to disrupted blood flow.'
-      },
-    ],
+    questions: module9Questions,
   },
   {
     id: 'community-outreach',
@@ -1337,124 +879,6 @@ export const topicsData: TopicContent[] = [
         'Knowledge saves lives: bystander confidence transforms ordinary students into real lifesavers!'
       ],
     },
-    preTestQuestions: [
-      {
-        id: 'co-pre1',
-        question: 'What is the primary mission of the HeartRescue India School Program?',
-        options: [
-          'To replace certified hospital doctors with school students',
-          'To sell medical hardware to local schools',
-          'To empower students as community champions who increase public awareness of heart attack, cardiac arrest, and stroke',
-          'To conduct pharmaceutical trials'
-        ],
-        correctAnswerIndex: 2,
-        explanation: 'The HeartRescue India School Program trains students and teachers to recognize cardiovascular emergencies, act as bystanders, and educate their families.'
-      },
-      {
-        id: 'co-pre2',
-        question: 'What is the dedicated emergency telephone number in India to dispatch an ambulance for a collapsed person?',
-        options: ['108', '100', '101', '102'],
-        correctAnswerIndex: 0,
-        explanation: '108 is the unified emergency number in India for dispatching medical ambulances and first-response emergency services.'
-      },
-      {
-        id: 'co-pre3',
-        question: 'Why is it valuable for students to discuss cardiovascular risk factors with their parents and relatives?',
-        options: [
-          'Children should prescribe medications',
-          'Adults may have undetected risk factors like hypertension or diabetes that can be diagnosed and treated early',
-          'To test their parents’ memory',
-          'It is a mandatory legal requirement'
-        ],
-        correctAnswerIndex: 1,
-        explanation: 'Many adults live with undiagnosed hypertension or diabetes; family discussions prompt timely medical checkups and healthy lifestyle changes.'
-      },
-      {
-        id: 'co-pre4',
-        question: 'What tool is used by community healthcare programs to assess an adult’s 10-year risk of cardiovascular disease based on age, blood pressure, smoking, and blood sugar?',
-        options: [
-          'An online video quiz',
-          'A dental examination chart',
-          'A school report card',
-          'WHO/ISH Cardiovascular Disease Risk Prediction Charts'
-        ],
-        correctAnswerIndex: 3,
-        explanation: 'World Health Organization / International Society of Hypertension (WHO/ISH) risk charts predict 10-year cardiovascular risk to guide preventive therapy.'
-      },
-      {
-        id: 'co-pre5',
-        question: 'In the HeartRescue India project model, how do Hub hospitals (like Ramaiah) and Spoke hospitals collaborate?',
-        options: [
-          'They compete against each other for patients',
-          'They form a coordinated emergency network to provide rapid triage, stabilization, ambulance transfer, and tertiary care',
-          'They only exchange library books',
-          'They never communicate with one another'
-        ],
-        correctAnswerIndex: 1,
-        explanation: 'The Hub-and-Spoke model links local community facilities (spokes) with comprehensive tertiary centers (hubs) to minimize pre-hospital delays.'
-      },
-    ],
-    postTestQuestions: [
-      {
-        id: 'co-post1',
-        question: 'How many family members, relatives, or neighbors are students challenged to educate about heart-healthy living in their community outreach assignment?',
-        options: [
-          'At least 7 people',
-          'Exactly 100 people',
-          'None',
-          'Only licensed healthcare providers'
-        ],
-        correctAnswerIndex: 0,
-        explanation: 'The curriculum encourages each student to share the life-saving knowledge and the 7 heart-healthy steps with at least 7 people in their community.'
-      },
-      {
-        id: 'co-post2',
-        question: 'What should a student advise their family to do if someone collapses, stops responding, and is not breathing normally?',
-        options: [
-          'Splash cold water on their face and wait 30 minutes',
-          'Give them hot tea to drink',
-          'Call 108 immediately and begin continuous hands-only chest compressions in the center of the chest',
-          'Leave the room and wait for someone else to find them'
-        ],
-        correctAnswerIndex: 2,
-        explanation: 'Calling 108 and starting immediate hands-only chest compressions are the two most critical life-saving actions in sudden cardiac arrest.'
-      },
-      {
-        id: 'co-post3',
-        question: 'What vital information should you clearly give when calling 108 for an unresponsive collapsed victim?',
-        options: [
-          'Only your first name',
-          'The victim’s favorite food',
-          'The current weather forecast',
-          'Your exact location/landmarks, victim responsiveness, whether they are breathing, and request an AED'
-        ],
-        correctAnswerIndex: 3,
-        explanation: 'Providing exact location details, describing responsiveness and breathing, and requesting an AED ensure appropriate ambulance dispatch.'
-      },
-      {
-        id: 'co-post4',
-        question: 'Which of the following actions best demonstrates being an active "Agent of Change" in public health?',
-        options: [
-          'Keeping emergency first aid knowledge a secret',
-          'Teaching family members the F-A-S-T stroke signs, CPR steps, and heart-healthy dietary choices',
-          'Telling people that heart attacks only happen to elderly people',
-          'Encouraging family members to avoid physical activity'
-        ],
-        correctAnswerIndex: 1,
-        explanation: 'Sharing life-saving knowledge and preventive lifestyle habits transforms students into impactful public health ambassadors.'
-      },
-      {
-        id: 'co-post5',
-        question: 'Why is early bystander intervention in the first few minutes of cardiac arrest so vital before the ambulance arrives?',
-        options: [
-          'Irreversible brain damage begins within 4 to 6 minutes without blood flow; bystander CPR maintains vital oxygen circulation',
-          'Ambulances do not carry medical equipment',
-          'Bystanders are legally required to perform complex surgery',
-          'The heart cannot be restarted once paramedics arrive'
-        ],
-        correctAnswerIndex: 0,
-        explanation: 'Permanent brain cell injury begins within 4 to 6 minutes of circulatory arrest. Bystander CPR bridges this crucial window until advanced medical care arrives.'
-      },
-    ],
+    questions: [], // Module 10 has no pre/post test in the HRI Schools Module
   },
 ];
