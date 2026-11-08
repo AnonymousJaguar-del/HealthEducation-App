@@ -77,7 +77,7 @@ export function PrePostTest({ type, questions, onBack, onComplete, topicTitle }:
               {type === 'pre' ? 'Pre-Test' : 'Post-Test'}: {topicTitle}
             </h3>
             <p className="text-xs text-slate-500 mt-2 leading-relaxed">
-              Answer <span className="font-bold text-teal-700">{questions.length} multiple choice questions</span> to assess your emergency first aid response speed and accuracy.
+              Answer <span className="font-bold text-teal-700">{questions.length} multiple choice questions</span> to check what you know about this topic.
             </p>
           </div>
 
@@ -216,7 +216,7 @@ export function PrePostTest({ type, questions, onBack, onComplete, topicTitle }:
           className="p-1 px-2.5 bg-slate-100 rounded-lg hover:bg-slate-200 text-slate-600 font-bold text-xs flex items-center gap-1 transition"
           id="btn-test-exit"
         >
-          <ArrowLeft className="w-4 h-4" /> Save Quit
+          <ArrowLeft className="w-4 h-4" /> Quit
         </button>
         <span className="text-xs font-extrabold text-slate-800 uppercase tracking-wide truncate max-w-[150px]">
           {type === 'pre' ? 'Pre-Test' : 'Post-Test'}

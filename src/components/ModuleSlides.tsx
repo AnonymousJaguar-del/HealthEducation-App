@@ -34,7 +34,7 @@ export function ModuleSlides({ topic, onBack, onCompleteModule }: ModuleSlidesPr
           className="p-1 px-2.5 bg-slate-100 rounded-lg hover:bg-slate-200 text-slate-600 font-bold text-xs flex items-center gap-1 transition"
           id="btn-module-slide-back"
         >
-          <ArrowLeft className="w-4 h-4" /> Save & Exit
+          <ArrowLeft className="w-4 h-4" /> Exit
         </button>
         <div className="text-center">
           <span className="text-[10px] font-extrabold text-teal-600 uppercase tracking-widest block">Active Module</span>
@@ -145,27 +145,6 @@ export function ModuleSlides({ topic, onBack, onCompleteModule }: ModuleSlidesPr
                 ))}
               </div>
             </div>
-
-            {/* Interactive Picture Aid Simulator */}
-            <div className="bg-rose-50 border border-rose-100 rounded-2xl p-4">
-              <h5 className="font-extrabold text-xs text-rose-800 flex items-center gap-1.5 uppercase tracking-wider mb-2">
-                <AlertCircle className="w-4 h-4 text-rose-600" /> Watch for Red Flag Symptoms!
-              </h5>
-              <p className="text-xs text-rose-700 leading-relaxed">
-                If the patient complains of sudden sharp symptoms or looks extremely weak, act within minutes. 
-                <span className="font-bold"> Delay is tissue damage.</span>
-              </p>
-              <div className="mt-3 grid grid-cols-2 gap-2 text-center">
-                <div className="bg-white p-2 border border-slate-100 rounded-xl">
-                  <span className="text-2xl block mb-1">🥵</span>
-                  <span className="text-[10px] font-bold text-slate-700 block">Profuse Sweat</span>
-                </div>
-                <div className="bg-white p-2 border border-slate-100 rounded-xl">
-                  <span className="text-2xl block mb-1">😵</span>
-                  <span className="text-[10px] font-bold text-slate-700 block">Extreme Fatigue</span>
-                </div>
-              </div>
-            </div>
           </div>
         )}
 
@@ -210,16 +189,17 @@ export function ModuleSlides({ topic, onBack, onCompleteModule }: ModuleSlidesPr
               </div>
             </div>
 
-            {/* DOs and DONTs Checklist */}
+            {/* Key points. These mix warnings ("DO NOT...") with correct advice
+                ("Continue compressions..."), so use a neutral bullet, not ❌ */}
             {topic.firstAid.notes && topic.firstAid.notes.length > 0 && (
               <div className="bg-amber-50 border border-amber-100 rounded-2xl p-4 flex flex-col gap-3">
                 <h5 className="font-extrabold text-xs text-amber-800 flex items-center gap-1.5 uppercase tracking-wide">
-                  ⚠️ Critical Warnings & Exclusions
+                  ⚠️ Important Points
                 </h5>
                 <ul className="text-xs text-amber-900 flex flex-col gap-2.5 leading-relaxed font-sans">
                   {topic.firstAid.notes.map((note, key) => (
                     <li key={key} className="flex gap-2 items-start text-xs font-medium">
-                      <span className="text-amber-600 shrink-0">❌</span>
+                      <span className="text-amber-600 font-bold shrink-0">•</span>
                       <span>{note}</span>
                     </li>
                   ))}
