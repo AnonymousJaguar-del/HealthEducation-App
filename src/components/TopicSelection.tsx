@@ -1,6 +1,8 @@
 import { TopicContent, UserProfile } from '../types';
-import * as LucideIcons from 'lucide-react';
-import { HelpCircle, CheckCircle, Lock, Play, ArrowLeft, ChevronRight, Info, ShieldAlert } from 'lucide-react';
+import {
+  HelpCircle, CheckCircle, Lock, Play, ArrowLeft, ChevronRight, Info, ShieldAlert,
+  Heart, Zap, Apple, TrendingUp, Brain, Users, type LucideIcon,
+} from 'lucide-react';
 
 interface TopicSelectionProps {
   topics: TopicContent[];
@@ -12,11 +14,15 @@ interface TopicSelectionProps {
   onStartPostTest: () => void;
 }
 
+// Icons used by topic.iconName. Importing only these (not `* as LucideIcons`) keeps the
+// rest of the icon library out of the bundle; add an entry here when a topic uses a new icon.
+const TOPIC_ICONS: Record<string, LucideIcon> = {
+  Heart, ShieldAlert, Zap, Apple, TrendingUp, Brain, Users,
+};
+
 // safe Lucide icon renderer
 function TopicIcon({ name, className = 'w-5 h-5' }: { name: string; className?: string }) {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const IconComponent = (LucideIcons as any)[name];
-  if (!IconComponent) return <LucideIcons.Heart className={className} />;
+  const IconComponent = TOPIC_ICONS[name] ?? Heart;
   return <IconComponent className={className} />;
 }
 
@@ -48,6 +54,16 @@ export function TopicSelection({
   const hasTests = activeTopic.questions.length > 0;
   const moduleUnlocked = !hasTests || prog.preTestCompleted;
 
+  // On desktop the first topic is shown before any is clicked; select it before starting a step,
+  // otherwise App has no selectedTopic and the test/lesson never opens
+  const withActiveTopic = (start: () => void) => () => {
+    if (!selectedTopic) onSelectTopic(activeTopic);
+    start();
+  };
+  const startPreTest = withActiveTopic(onStartPreTest);
+  const startModule = withActiveTopic(onStartModule);
+  const startPostTest = withActiveTopic(onStartPostTest);
+
   // Completed modules count
   const completedCount = Object.values(profile.progress).filter(p => p.postTestCompleted).length;
 
@@ -62,7 +78,7 @@ export function TopicSelection({
         {/* LEFT COLUMN: Course Module Selector Card Selection */}
         <section className="col-span-12 lg:col-span-5 flex flex-col gap-4 overflow-hidden h-full">
           <div className="text-left shrink-0">
-            <h2 className="text-sm font-black text-slate-450 uppercase tracking-widest block mb-1">Select emergency Topic</h2>
+            <h2 className="text-sm font-black text-slate-400 uppercase tracking-widest block mb-1">Select emergency Topic</h2>
             <p className="text-xs text-slate-500 font-medium leading-relaxed">Choose an academy track to begin your clinical progress checkpoints.</p>
           </div>
 
@@ -119,7 +135,7 @@ export function TopicSelection({
                       <div className="flex-1 h-1 bg-slate-100 rounded-full overflow-hidden">
                         <div
                           className={`h-full transition-all duration-300 rounded-full ${
-                            progressPercentage === 100 ? 'bg-emerald-500' : 'bg-teal-505 bg-teal-500'
+                            progressPercentage === 100 ? 'bg-emerald-500' : 'bg-teal-500'
                           }`}
                           style={{ width: `${progressPercentage}%` }}
                         />
@@ -202,7 +218,7 @@ export function TopicSelection({
                   {/* Action trigger button */}
                   {!prog.preTestCompleted && (
                     <button
-                      onClick={onStartPreTest}
+                      onClick={startPreTest}
                       className="mt-4 px-5 py-2 bg-teal-600 hover:bg-teal-700 text-white text-xs font-black rounded-xl shadow-md transition-all active:scale-95"
                       id="btn-desktop-start-pretest"
                     >
@@ -211,7 +227,7 @@ export function TopicSelection({
                   )}
                   {prog.preTestCompleted && (
                     <button
-                      onClick={onStartPreTest}
+                      onClick={startPreTest}
                       className="mt-3 text-xs font-bold text-green-700 hover:underline inline-flex items-center gap-0.5"
                     >
                       Re-attempt pre-test &rarr;
@@ -232,7 +248,7 @@ export function TopicSelection({
                     <span className="text-xs font-black">{hasTests ? 2 : 1}</span>
                   </div>
                 ) : (
-                  <div className="w-11 h-11 rounded-full bg-slate-150 border border-slate-200 text-slate-400 flex items-center justify-center shrink-0 z-10">
+                  <div className="w-11 h-11 rounded-full bg-slate-100 border border-slate-200 text-slate-400 flex items-center justify-center shrink-0 z-10">
                     <Lock className="w-4.5 h-4.5" />
                   </div>
                 )}
@@ -248,14 +264,14 @@ export function TopicSelection({
                     prog.moduleCompleted ? 'text-green-900' : moduleUnlocked ? 'text-slate-800' : 'text-slate-400'
                   }`}>{hasTests ? '2. ' : ''}Diagnostic Guidelines Case-Study</h4>
                   <p className={`text-xs mt-1 leading-snug ${
-                    prog.moduleCompleted ? 'text-green-700' : moduleUnlocked ? 'text-slate-500' : 'text-slate-450'
+                    prog.moduleCompleted ? 'text-green-700' : moduleUnlocked ? 'text-slate-500' : 'text-slate-400'
                   }`}>
                     Interactive diagnostic mnemonics and clinical warning rules approved by emergency physicians.
                   </p>
 
                   {moduleUnlocked && !prog.moduleCompleted && (
                     <button
-                      onClick={onStartModule}
+                      onClick={startModule}
                       className="mt-4 px-5 py-2 bg-teal-600 hover:bg-teal-700 text-white text-xs font-black rounded-xl shadow-md transition-all active:scale-95"
                       id="btn-desktop-start-module"
                     >
@@ -264,7 +280,7 @@ export function TopicSelection({
                   )}
                   {prog.moduleCompleted && (
                     <button
-                      onClick={onStartModule}
+                      onClick={startModule}
                       className="mt-3 text-xs font-bold text-green-700 hover:underline inline-flex items-center gap-0.5"
                     >
                       Review training slides &rarr;
@@ -288,7 +304,7 @@ export function TopicSelection({
                     <span className="text-xs font-black">3</span>
                   </div>
                 ) : (
-                  <div className="w-11 h-11 rounded-full bg-slate-150 border border-slate-200 text-slate-400 flex items-center justify-center shrink-0 z-10">
+                  <div className="w-11 h-11 rounded-full bg-slate-100 border border-slate-200 text-slate-400 flex items-center justify-center shrink-0 z-10">
                     <Lock className="w-4.5 h-4.5" />
                   </div>
                 )}
@@ -311,14 +327,14 @@ export function TopicSelection({
                     )}
                   </div>
                   <p className={`text-xs mt-1 leading-snug ${
-                    prog.postTestCompleted ? 'text-green-700' : prog.moduleCompleted ? 'text-slate-500' : 'text-slate-450'
+                    prog.postTestCompleted ? 'text-green-700' : prog.moduleCompleted ? 'text-slate-500' : 'text-slate-400'
                   }`}>
                     Demonstrate 80%+ response accuracy to master this learning track!
                   </p>
 
                   {prog.moduleCompleted && !prog.postTestCompleted && (
                     <button
-                      onClick={onStartPostTest}
+                      onClick={startPostTest}
                       className="mt-4 px-5 py-2 bg-teal-600 hover:bg-teal-700 text-white text-xs font-black rounded-xl shadow-md transition-all active:scale-95"
                       id="btn-desktop-start-posttest"
                     >
@@ -327,7 +343,7 @@ export function TopicSelection({
                   )}
                   {prog.postTestCompleted && (
                     <button
-                      onClick={onStartPostTest}
+                      onClick={startPostTest}
                       className="mt-4 px-5 py-2 bg-teal-600 hover:bg-teal-700 text-white text-xs font-black rounded-xl shadow-md transition-all active:scale-95"
                       id="btn-desktop-retry-posttest"
                     >
@@ -416,7 +432,7 @@ export function TopicSelection({
                     prog.preTestCompleted ? 'bg-green-50/50 border-green-100' : 'bg-white border-teal-600 border-2 shadow-sm'
                   }`}>
                     <div className="flex items-center justify-between">
-                      <h4 className="font-extrabold text-xs text-slate-850">1. Pre-Test Assessment</h4>
+                      <h4 className="font-extrabold text-xs text-slate-800">1. Pre-Test Assessment</h4>
                       {prog.preTestCompleted && (
                         <span className="text-[8.5px] font-black bg-green-100 text-green-700 px-1.5 py-0.5 rounded">
                           {prog.preTestScore || 0}/{activeTopic.questions.length}
@@ -428,11 +444,20 @@ export function TopicSelection({
                     </p>
                     {!prog.preTestCompleted && (
                       <button
-                        onClick={onStartPreTest}
+                        onClick={startPreTest}
                         className="mt-3 bg-teal-600 hover:bg-teal-700 text-white text-[10.5px] font-black px-4 py-1.5 rounded-lg transition active:scale-95"
                         id="btn-mobile-pre-test"
                       >
                         TAKE PRE-TEST
+                      </button>
+                    )}
+                    {prog.preTestCompleted && (
+                      <button
+                        onClick={startPreTest}
+                        className="mt-2 text-[11px] font-bold text-green-700 hover:underline inline-flex items-center gap-0.5"
+                        id="btn-mobile-retry-pretest"
+                      >
+                        Re-attempt pre-test &rarr;
                       </button>
                     )}
                   </div>
@@ -450,7 +475,7 @@ export function TopicSelection({
                       {hasTests ? 2 : 1}
                     </div>
                   ) : (
-                    <div className="w-10 h-10 rounded-full bg-slate-150 border border-slate-200 text-slate-400 flex items-center justify-center shrink-0 z-10">
+                    <div className="w-10 h-10 rounded-full bg-slate-100 border border-slate-200 text-slate-400 flex items-center justify-center shrink-0 z-10">
                       <Lock className="w-4 h-4" />
                     </div>
                   )}
@@ -463,16 +488,25 @@ export function TopicSelection({
                       : 'bg-slate-50 border-slate-200/80 text-slate-400'
                   }`}>
                     <h4 className="font-extrabold text-xs">{hasTests ? '2. ' : ''}Study Modules</h4>
-                    <p className="text-[11px] text-slate-450 mt-0.5 leading-snug">
+                    <p className="text-[11px] text-slate-400 mt-0.5 leading-snug">
                       Learn guidelines, clinical triggers, and diagnostic aides.
                     </p>
                     {moduleUnlocked && !prog.moduleCompleted && (
                       <button
-                        onClick={onStartModule}
+                        onClick={startModule}
                         className="mt-3 bg-teal-600 hover:bg-teal-700 text-white text-[10.5px] font-black px-4 py-1.5 rounded-lg transition active:scale-95"
                         id="btn-mobile-start-module"
                       >
                         START MODULE
+                      </button>
+                    )}
+                    {prog.moduleCompleted && (
+                      <button
+                        onClick={startModule}
+                        className="mt-2 text-[11px] font-bold text-green-700 hover:underline inline-flex items-center gap-0.5"
+                        id="btn-mobile-review-module"
+                      >
+                        Review training slides &rarr;
                       </button>
                     )}
                   </div>
@@ -490,7 +524,7 @@ export function TopicSelection({
                       3
                     </div>
                   ) : (
-                    <div className="w-10 h-10 rounded-full bg-slate-150 border border-slate-200 text-slate-400 flex items-center justify-center shrink-0 z-10">
+                    <div className="w-10 h-10 rounded-full bg-slate-100 border border-slate-200 text-slate-400 flex items-center justify-center shrink-0 z-10">
                       <Lock className="w-4 h-4" />
                     </div>
                   )}
@@ -510,12 +544,12 @@ export function TopicSelection({
                         </span>
                       )}
                     </div>
-                    <p className="text-[11px] text-slate-450 mt-0.5 leading-snug">
+                    <p className="text-[11px] text-slate-400 mt-0.5 leading-snug">
                       Score 80%+ accuracy to successfully master this topic track.
                     </p>
                     {prog.moduleCompleted && !prog.postTestCompleted && (
                       <button
-                        onClick={onStartPostTest}
+                        onClick={startPostTest}
                         className="mt-3 bg-teal-600 hover:bg-teal-700 text-white text-[10.5px] font-black px-4 py-1.5 rounded-lg"
                         id="btn-mobile-start-posttest"
                       >
@@ -524,7 +558,7 @@ export function TopicSelection({
                     )}
                     {prog.postTestCompleted && (
                       <button
-                        onClick={onStartPostTest}
+                        onClick={startPostTest}
                         className="mt-3 bg-teal-600 hover:bg-teal-700 text-white text-[10.5px] font-black px-4 py-1.5 rounded-lg"
                         id="btn-mobile-retry-posttest"
                       >

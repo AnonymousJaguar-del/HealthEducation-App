@@ -40,7 +40,8 @@ export default function App() {
           const lastActive = new Date(parsed.lastActiveDate);
           const today = new Date(todayStr);
           const diffTime = Math.abs(today.getTime() - lastActive.getTime());
-          const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+          // Round, not ceil: a day across a daylight-saving change is 23 or 25 hours
+          const diffDays = Math.round(diffTime / (1000 * 60 * 60 * 24));
           
           if (diffDays === 1) {
             // Consecutive day! Bumps streak
@@ -50,8 +51,10 @@ export default function App() {
             parsed.streak = 1;
           }
           parsed.lastActiveDate = todayStr;
+          // Persist today's visit, otherwise the streak is lost if nothing else is saved today
+          localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(parsed));
         }
-        
+
         setProfile(parsed);
       } else {
         localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(DEFAULT_PROFILE));
@@ -86,7 +89,7 @@ export default function App() {
   };
 
   const handleResetProgress = () => {
-    saveProfile(DEFAULT_PROFILE);
+    saveProfile({ ...DEFAULT_PROFILE, lastActiveDate: new Date().toDateString() });
     setSelectedTopic(null);
     setMode('selection');
     setActiveTab('courses');
@@ -246,13 +249,10 @@ export default function App() {
             <header className="bg-white border-b border-slate-200/50 p-5 md:p-6 shrink-0 flex justify-between items-center z-10 select-none">
               <div>
                 <h1 className="text-xl md:text-2xl font-black text-slate-800 tracking-tight flex items-center gap-1.5 leading-none">
-                  HeartRescue
-                  <span className="text-teal-600 font-extrabold text-[10px] uppercase tracking-wider bg-teal-50 px-2 py-0.5 rounded-md border border-teal-100 ml-1.5">
-                    School Program
-                  </span>
+                  Medaware
                 </h1>
                 <p className="text-xs text-slate-500 mt-1 max-w-md font-medium">
-                  Ramaiah Medical College & Medtronic Foundation cardiovascular emergency training.
+                  Ramaiah Medical College
                 </p>
               </div>
               
@@ -282,7 +282,7 @@ export default function App() {
           {/* Mobile Status Header */}
           {mode === 'selection' && (
             <div className="sm:hidden bg-teal-800 text-white px-4 py-3 flex items-center justify-between shrink-0 select-none shadow">
-              <span className="text-xs font-black tracking-widest text-teal-100 uppercase">Vitals</span>
+              <span className="text-xs font-black tracking-widest text-teal-100 uppercase">Medaware</span>
               <div className="flex items-center gap-1 text-xs font-bold text-orange-400 bg-teal-950/40 px-2.5 py-0.5 rounded-full">
                 <Flame className="w-3.5 h-3.5 text-orange-500 fill-orange-500" />
                 <span>{profile.streak} Days</span>
