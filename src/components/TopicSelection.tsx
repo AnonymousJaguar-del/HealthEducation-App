@@ -44,6 +44,10 @@ export function TopicSelection({
   const activeTopic = selectedTopic || topics[0];
   const prog = getTopicProgress(activeTopic?.id || topics[0].id);
 
+  // Topics without a pre/post test (Module 10) go straight to the lesson
+  const hasTests = activeTopic.questions.length > 0;
+  const moduleUnlocked = !hasTests || prog.preTestCompleted;
+
   // Completed modules count
   const completedCount = Object.values(profile.progress).filter(p => p.postTestCompleted).length;
 
@@ -164,6 +168,7 @@ export function TopicSelection({
               <div className="absolute left-[21px] top-6 bottom-6 w-1 bg-slate-100 rounded-full" />
               
               {/* STEP 1: PRE-TEST */}
+              {hasTests && (
               <div className="relative flex items-start gap-5">
                 {/* Node circle icon display */}
                 {prog.preTestCompleted ? (
@@ -186,12 +191,12 @@ export function TopicSelection({
                     <h4 className={`font-black text-sm ${prog.preTestCompleted ? 'text-green-900' : 'text-slate-800'}`}>1. Pre-Test Assessment</h4>
                     {prog.preTestCompleted && (
                       <span className="text-[9px] font-black bg-green-200 text-green-700 px-2 py-0.5 rounded uppercase">
-                        Score: {prog.preTestScore || 0}/{activeTopic.preTestQuestions?.length || 5}
+                        Score: {prog.preTestScore || 0}/{activeTopic.questions.length}
                       </span>
                     )}
                   </div>
                   <p className={`text-xs mt-1 leading-snug ${prog.preTestCompleted ? 'text-green-700' : 'text-slate-500'}`}>
-                    {activeTopic.preTestQuestions?.length || 5} MCQs to understand your active triage instincts before studying guidelines.
+                    {activeTopic.questions.length} MCQs to understand your active triage instincts before studying guidelines.
                   </p>
                   
                   {/* Action trigger button */}
@@ -214,6 +219,7 @@ export function TopicSelection({
                   )}
                 </div>
               </div>
+              )}
 
               {/* STEP 2: LESSON GUIDELINE SLIDES */}
               <div className="relative flex items-start gap-5">
@@ -221,9 +227,9 @@ export function TopicSelection({
                   <div className="w-11 h-11 rounded-full bg-green-500 text-white flex items-center justify-center shrink-0 z-10 shadow-md shadow-green-100">
                     <CheckCircle className="w-5.5 h-5.5" />
                   </div>
-                ) : prog.preTestCompleted ? (
+                ) : moduleUnlocked ? (
                   <div className="w-11 h-11 rounded-full bg-teal-600 border-4 border-teal-100 text-white flex items-center justify-center shrink-0 z-10 shadow">
-                    <span className="text-xs font-black">2</span>
+                    <span className="text-xs font-black">{hasTests ? 2 : 1}</span>
                   </div>
                 ) : (
                   <div className="w-11 h-11 rounded-full bg-slate-150 border border-slate-200 text-slate-400 flex items-center justify-center shrink-0 z-10">
@@ -234,20 +240,20 @@ export function TopicSelection({
                 <div className={`flex-grow p-5 rounded-2xl border transition-all ${
                   prog.moduleCompleted
                     ? 'bg-green-50/50 border-green-200 opacity-80'
-                    : prog.preTestCompleted
+                    : moduleUnlocked
                     ? 'bg-white border-teal-600 border-2 shadow-lg'
                     : 'bg-slate-50 border-slate-200/80'
                 }`}>
                   <h4 className={`font-black text-sm ${
-                    prog.moduleCompleted ? 'text-green-900' : prog.preTestCompleted ? 'text-slate-800' : 'text-slate-400'
-                  }`}>2. Diagnostic Guidelines Case-Study</h4>
+                    prog.moduleCompleted ? 'text-green-900' : moduleUnlocked ? 'text-slate-800' : 'text-slate-400'
+                  }`}>{hasTests ? '2. ' : ''}Diagnostic Guidelines Case-Study</h4>
                   <p className={`text-xs mt-1 leading-snug ${
-                    prog.moduleCompleted ? 'text-green-700' : prog.preTestCompleted ? 'text-slate-500' : 'text-slate-450'
+                    prog.moduleCompleted ? 'text-green-700' : moduleUnlocked ? 'text-slate-500' : 'text-slate-450'
                   }`}>
                     Interactive diagnostic mnemonics and clinical warning rules approved by emergency physicians.
                   </p>
 
-                  {prog.preTestCompleted && !prog.moduleCompleted && (
+                  {moduleUnlocked && !prog.moduleCompleted && (
                     <button
                       onClick={onStartModule}
                       className="mt-4 px-5 py-2 bg-teal-600 hover:bg-teal-700 text-white text-xs font-black rounded-xl shadow-md transition-all active:scale-95"
@@ -264,13 +270,14 @@ export function TopicSelection({
                       Review training slides &rarr;
                     </button>
                   )}
-                  {!prog.preTestCompleted && (
+                  {!moduleUnlocked && (
                     <span className="text-[9.5px] italic text-slate-400 font-bold block mt-3 uppercase tracking-wider">Locked: Complete Pre-Test to unlock</span>
                   )}
                 </div>
               </div>
 
               {/* STEP 3: POST-TEST EVALUATION */}
+              {hasTests && (
               <div className="relative flex items-start gap-5">
                 {prog.postTestCompleted ? (
                   <div className="w-11 h-11 rounded-full bg-green-500 text-white flex items-center justify-center shrink-0 z-10 shadow-md shadow-green-100">
@@ -299,7 +306,7 @@ export function TopicSelection({
                     }`}>3. Post-Test Evaluation</h4>
                     {prog.postTestCompleted && (
                       <span className="text-[9px] font-black bg-green-200 text-green-700 px-2 py-0.5 rounded uppercase">
-                        Mastery: {prog.postTestScore || 0}/{activeTopic.postTestQuestions?.length || 5}
+                        Mastery: {prog.postTestScore || 0}/{activeTopic.questions.length}
                       </span>
                     )}
                   </div>
@@ -332,6 +339,7 @@ export function TopicSelection({
                   )}
                 </div>
               </div>
+              )}
 
             </div>
 
@@ -392,6 +400,7 @@ export function TopicSelection({
                 <div className="absolute left-[20px] top-6 bottom-6 w-1 bg-slate-200 rounded-full" />
 
                 {/* Step 1 pretest */}
+                {hasTests && (
                 <div className="relative flex items-start gap-4">
                   {prog.preTestCompleted ? (
                     <div className="w-10 h-10 rounded-full bg-green-500 text-white flex items-center justify-center shrink-0 z-10 shadow-sm shadow-green-100">
@@ -410,7 +419,7 @@ export function TopicSelection({
                       <h4 className="font-extrabold text-xs text-slate-850">1. Pre-Test Assessment</h4>
                       {prog.preTestCompleted && (
                         <span className="text-[8.5px] font-black bg-green-100 text-green-700 px-1.5 py-0.5 rounded">
-                          {prog.preTestScore || 0}/{activeTopic.preTestQuestions?.length || 5}
+                          {prog.preTestScore || 0}/{activeTopic.questions.length}
                         </span>
                       )}
                     </div>
@@ -428,6 +437,7 @@ export function TopicSelection({
                     )}
                   </div>
                 </div>
+                )}
 
                 {/* Step 2 slideshow */}
                 <div className="relative flex items-start gap-4">
@@ -435,9 +445,9 @@ export function TopicSelection({
                     <div className="w-10 h-10 rounded-full bg-green-500 text-white flex items-center justify-center shrink-0 z-10 shadow-sm shadow-green-100">
                       <CheckCircle className="w-5 h-5" />
                     </div>
-                  ) : prog.preTestCompleted ? (
+                  ) : moduleUnlocked ? (
                     <div className="w-10 h-10 rounded-full bg-teal-600 border-4 border-teal-100 text-white flex items-center justify-center shrink-0 z-10 font-bold text-xs shadow">
-                      2
+                      {hasTests ? 2 : 1}
                     </div>
                   ) : (
                     <div className="w-10 h-10 rounded-full bg-slate-150 border border-slate-200 text-slate-400 flex items-center justify-center shrink-0 z-10">
@@ -448,15 +458,15 @@ export function TopicSelection({
                   <div className={`flex-grow p-4 rounded-xl border ${
                     prog.moduleCompleted
                       ? 'bg-green-50/50 border-green-100'
-                      : prog.preTestCompleted
+                      : moduleUnlocked
                       ? 'bg-white border-teal-600 border-2 shadow-sm'
                       : 'bg-slate-50 border-slate-200/80 text-slate-400'
                   }`}>
-                    <h4 className="font-extrabold text-xs">2. Study Modules</h4>
+                    <h4 className="font-extrabold text-xs">{hasTests ? '2. ' : ''}Study Modules</h4>
                     <p className="text-[11px] text-slate-450 mt-0.5 leading-snug">
                       Learn guidelines, clinical triggers, and diagnostic aides.
                     </p>
-                    {prog.preTestCompleted && !prog.moduleCompleted && (
+                    {moduleUnlocked && !prog.moduleCompleted && (
                       <button
                         onClick={onStartModule}
                         className="mt-3 bg-teal-600 hover:bg-teal-700 text-white text-[10.5px] font-black px-4 py-1.5 rounded-lg transition active:scale-95"
@@ -469,6 +479,7 @@ export function TopicSelection({
                 </div>
 
                 {/* Step 3 Post-Test */}
+                {hasTests && (
                 <div className="relative flex items-start gap-4">
                   {prog.postTestCompleted ? (
                     <div className="w-10 h-10 rounded-full bg-green-500 text-white flex items-center justify-center shrink-0 z-10 shadow-sm shadow-green-100">
@@ -495,7 +506,7 @@ export function TopicSelection({
                       <h4 className="font-extrabold text-xs">3. Post-Test Evaluation</h4>
                       {prog.postTestCompleted && (
                         <span className="text-[8.5px] font-black bg-green-100 text-green-700 px-1.5 py-0.5 rounded">
-                          {prog.postTestScore || 0}/{activeTopic.postTestQuestions?.length || 5}
+                          {prog.postTestScore || 0}/{activeTopic.questions.length}
                         </span>
                       )}
                     </div>
@@ -522,6 +533,7 @@ export function TopicSelection({
                     )}
                   </div>
                 </div>
+                )}
 
               </div>
 

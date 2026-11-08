@@ -1,6 +1,12 @@
 import { useState } from 'react';
 import { UserProfile } from '../types';
+import { topicsData } from '../data/topicsData';
 import { Award, Flame, RotateCcw, CheckCircle2, User, Check, Edit2 } from 'lucide-react';
+
+// Number of pre/post test questions for a topic (0 for topics without a test)
+const questionCount = (topicId: string) =>
+  topicsData.find((t) => t.id === topicId)?.questions.length ?? 0;
+const testedTopicIds = new Set(topicsData.filter((t) => t.questions.length > 0).map((t) => t.id));
 
 const AVATARS = [
   { id: 'hero-dr', name: 'LifeSaver Hero', emoji: '🧑‍⚕️' },
@@ -76,7 +82,9 @@ export const ALL_BADGES: AcademyBadge[] = [
     title: 'Master Clinician',
     description: 'Scored 100% on any Post-Test Assessment',
     icon: '🥇',
-    check: (p) => Object.values(p.progress).some((item) => (item.postTestScore ?? 0) >= 5),
+    check: (p) => Object.values(p.progress).some(
+      (item) => questionCount(item.topicId) > 0 && item.postTestScore === questionCount(item.topicId)
+    ),
   },
   {
     id: 'active-streak',
@@ -120,15 +128,12 @@ export function ProfileView({
   const progressEntries = Object.values(profile.progress);
   const preTestsCount = progressEntries.filter(p => p.preTestCompleted).length;
   const modulesCount = progressEntries.filter(p => p.moduleCompleted).length;
-  const postTestsCount = progressEntries.filter(p => p.postTestCompleted).length;
+  const postTestsCount = progressEntries.filter(p => p.postTestCompleted && testedTopicIds.has(p.topicId)).length;
 
   // Average post test score (normalized to percentage)
   const postTestPercentages = progressEntries
-    .filter(p => p.postTestScore !== undefined)
-    .map(p => {
-      const s = p.postTestScore || 0;
-      return s <= 5 ? Math.round((s / 5) * 100) : Math.round((s / 10) * 100);
-    });
+    .filter(p => p.postTestScore !== undefined && questionCount(p.topicId) > 0)
+    .map(p => Math.round(((p.postTestScore || 0) / questionCount(p.topicId)) * 100));
   const averageScore = postTestPercentages.length > 0 
     ? Math.round(postTestPercentages.reduce((a, b) => a + b, 0) / postTestPercentages.length) 
     : 0; // percentage
@@ -236,7 +241,7 @@ export function ProfileView({
             </div>
             <div>
               <p className="text-[10px] text-slate-400 font-bold uppercase">Post Tests</p>
-              <p className="text-lg font-extrabold text-slate-700">{postTestsCount}/{totalModulesCount}</p>
+              <p className="text-lg font-extrabold text-slate-700">{postTestsCount}/{testedTopicIds.size}</p>
             </div>
           </div>
 
